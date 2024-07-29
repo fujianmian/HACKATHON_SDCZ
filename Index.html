@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+</head>
+<body>
+  <form id="attendanceForm">
+    <label for="employeeId">Employee ID:</label><br>
+    <input type="text" id="employeeId" name="employeeId"><br>
+    <input type="radio" id="checkin" name="action" value="checkin">
+    <label for="checkin">Check In</label><br>
+    <input type="radio" id="checkout" name="action" value="checkout">
+    <label for="checkout">Check Out</label><br><br>
+    <input type="submit" value="Submit">
+  </form>
+  <p id="result"></p>
+  <p id="locationStatus"></p>
+  
+  <script>
+    document.getElementById('attendanceForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const userLocation = position.coords.latitude + "," + position.coords.longitude;
+        google.script.run.withSuccessHandler(function(response) {
+          document.getElementById('result').innerText = response.message;
+          document.getElementById('locationStatus').innerText = response.locationStatus ? response.locationStatus : '';
+        }).submitAttendance(
+          document.getElementById('employeeId').value,
+          document.querySelector('input[name="action"]:checked').value,
+          userLocation
+        );
+      }, function(error) {
+        alert('Error getting location: ' + error.message);
+      });
+    });
+  </script>
+</body>
+</html>
