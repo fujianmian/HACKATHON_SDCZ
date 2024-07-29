@@ -486,7 +486,7 @@ function sendDailyEmail() {
   var totalEmployees = getTotalEmployees();
   var employeeNames = getEmployeeNames();
   
-  var recipients = ['lowtengfong0217@gmail.com','junyong112204@gmail.com','hawmingc@gmail.com'];
+  var recipients = ['lowtengf@gmail.com','junyo@gmail.com','hawmi@gmail.com']; //enter email for management
   var subject = 'Daily Attendance Report for ' + Utilities.formatDate(latestDate, Session.getScriptTimeZone(), 'MM/dd/yyyy');
   
   function formatEmployeeList(employees) {
