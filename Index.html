@@ -20,19 +20,23 @@
     document.getElementById('attendanceForm').addEventListener('submit', function(e) {
       e.preventDefault();
       navigator.geolocation.getCurrentPosition(function(position) {
-        const userLocation = position.coords.latitude + "," + position.coords.longitude;
-        google.script.run.withSuccessHandler(function(response) {
+      const userLocation = position.coords.latitude + "," + position.coords.longitude;
+      google.script.run.withSuccessHandler(function(response) {
           document.getElementById('result').innerText = response.message;
           document.getElementById('locationStatus').innerText = response.locationStatus ? response.locationStatus : '';
-        }).submitAttendance(
+      }).submitAttendance(
           document.getElementById('employeeId').value,
           document.querySelector('input[name="action"]:checked').value,
           userLocation
-        );
+      );
       }, function(error) {
         alert('Error getting location: ' + error.message);
+      }, {
+        enableHighAccuracy: true,
+        timeout: 10000, // 可选，单位为毫秒，指定获取位置的超时时间
+        maximumAge: 0 // 可选，指定位置的有效期，单位为毫秒
       });
-    });
+      });
   </script>
 </body>
 </html>
